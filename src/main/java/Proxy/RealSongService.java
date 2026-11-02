@@ -16,7 +16,12 @@ public class RealSongService implements SongService {
     }
     @Override
     public Song searchById(Integer id) {
-        return null;
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return songs.get(id);
     }
 
     @Override
