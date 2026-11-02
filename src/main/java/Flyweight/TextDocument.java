@@ -8,7 +8,10 @@ public class TextDocument {
     private final CharacterFactory factory = new CharacterFactory();
 
     public void addCharacter(char character, String font, int size, String color) {
+        CharacterStyle style = factory.getCharacterProperties(font,size,color);
+        TextCharacter newCharacter = new TextCharacter(character, style);
 
+        characters.add(newCharacter);
     }
 
     public List<TextCharacter> getCharacters() {
