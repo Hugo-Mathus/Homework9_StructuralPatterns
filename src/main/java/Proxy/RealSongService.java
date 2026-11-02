@@ -1,5 +1,6 @@
 package Proxy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -26,7 +27,18 @@ public class RealSongService implements SongService {
 
     @Override
     public List<Song> searchByTitle(String title) {
-        return null;
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        List<Song> results = new ArrayList<>();
+        for (Song song : songs.values()) {
+            if (songs.containsKey(title)) {
+                results.add(song);
+            }
+        }
+        return results;
     }
 
     @Override
