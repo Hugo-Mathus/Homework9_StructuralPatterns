@@ -39,7 +39,7 @@ public class TextDocument {
             for (TextCharacter character : characters){
                 CharacterProperties properties = (CharacterProperties) character.getProperties();
 
-                writer.write((int) character.getCharacter() + "," + properties.getFont() + "," +properties.getSize() +"," + properties.getColor());
+                writer.write(character.getCharacter() + "," + properties.getFont() + "," +properties.getSize() +"," + properties.getColor());
                 writer.newLine();
             }
         }
@@ -58,7 +58,7 @@ public class TextDocument {
                     throw new IllegalArgumentException("Invalid data format");
                 }
 
-                char character = (char) Integer.parseInt(data[0]);
+                char character = data[0].charAt(0);
                 String font =  data[1];
                 int size = Integer.parseInt(data[2]);
                 String color = data[3];

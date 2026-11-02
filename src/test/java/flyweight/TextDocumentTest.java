@@ -96,8 +96,8 @@ public class TextDocumentTest {
         try{
             document.saveFile(path.toString());
             String content = Files.readString(path);
-            assertTrue(content.contains("72,Arial,12,Red"));
-            assertTrue(content.contains("101,Calibri,14,Blue"));
+            assertTrue(content.contains("H,Arial,12,Red"));
+            assertTrue(content.contains("e,Calibri,14,Blue"));
         }
         finally {
             Files.deleteIfExists(path);
