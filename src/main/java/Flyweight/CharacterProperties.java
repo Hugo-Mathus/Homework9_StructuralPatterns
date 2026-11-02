@@ -24,9 +24,6 @@ public class CharacterProperties implements CharacterStyle {
 
     @Override
     public void display(char character) {
-        System.out.println("Character " + character +
-                " | Font: " + font+
-                " | Size: " + size+
-                "| Color: " + color);
+        System.out.println("Character: " + character + " | Font: " + font + " | Size: " + size + " | Color: " + color);
     }
 }

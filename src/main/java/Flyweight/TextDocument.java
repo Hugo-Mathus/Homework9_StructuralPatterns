@@ -25,7 +25,9 @@ public class TextDocument {
     }
 
     public void display(){
-
+        for (TextCharacter character : characters){
+            character.display();
+        }
     }
 
     public void saveFile(String filename){

@@ -45,27 +45,18 @@ public class TextDocumentTest {
         TextDocument document = new TextDocument();
         document.addCharacter('H', "Arial", 12, "Red");
         document.addCharacter('e', "Arial", 12, "Red");
-
-        java.io.ByteArrayOutputStream output =
-                new java.io.ByteArrayOutputStream();
-
+        java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream();
         java.io.PrintStream original = System.out;
-
         try {
             System.setOut(new java.io.PrintStream(output));
-
             document.display();
-
         } finally {
             System.setOut(original);
         }
-
         String result = output.toString();
-
-        assertTrue(result.contains(
-                "Character: H | Font: Arial | Size: 12 | Color: Red"));
-
-        assertTrue(result.contains(
-                "Character: e | Font: Calibri | Size: 14 | Color: Blue"));
+        System.out.println("ACTUAL OUTPUT:");
+        System.out.println(result);
+        assertTrue(result.contains("Character: H | Font: Arial | Size: 12 | Color: Red"));
+        assertTrue(result.contains("Character: e | Font: Arial | Size: 12 | Color: Red"));
     }
 }
