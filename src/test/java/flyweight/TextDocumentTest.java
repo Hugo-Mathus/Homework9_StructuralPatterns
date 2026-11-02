@@ -92,12 +92,9 @@ public class TextDocumentTest {
         TextDocument document = new TextDocument();
         document.addCharacter('H', "Arial", 12, "Red");
         document.addCharacter('e', "Calibri", 14, "Blue");
-
         Path path = Path.of("testDocumentContents.txt");
-
         try{
             document.saveFile(path.toString());
-
             String content = Files.readString(path);
             assertTrue(content.contains("72,Arial,12,Red"));
             assertTrue(content.contains("101,Calibri,14,Blue"));
@@ -106,5 +103,60 @@ public class TextDocumentTest {
             Files.deleteIfExists(path);
         }
     }
+
+
+    @Test
+    void testLoadFile() throws IOException {
+        TextDocument original = new TextDocument();
+
+        original.addCharacter('H', "Arial", 12, "Red");
+        original.addCharacter('e', "Calibri", 14, "Blue");
+
+        Path path = Path.of("testLoadDocument.txt");
+
+        try {
+            original.saveFile(path.toString());
+
+            TextDocument loaded = new TextDocument();
+            loaded.loadFile(path.toString());
+
+            assertEquals(2, loaded.getCharacters().size());
+            assertEquals('H', loaded.getCharacters().get(0).getCharacter());
+            assertEquals('e', loaded.getCharacters().get(1).getCharacter());
+
+            CharacterProperties properties =
+                    (CharacterProperties) loaded.getCharacters()
+                            .get(1).getProperties();
+
+            assertEquals("Calibri", properties.getFont());
+            assertEquals(14, properties.getSize());
+            assertEquals("Blue", properties.getColor());
+
+        } finally {
+            Files.deleteIfExists(path);
+        }
+    }
+
+    @Test
+    void testLoadFileSharedProperties() throws IOException {
+        TextDocument original = new TextDocument();
+        original.addCharacter('H', "Arial", 12, "Red");
+        original.addCharacter('e', "Arial", 12, "Red");
+
+        Path path = Path.of("testSharedLoad.txt");
+
+        try {
+            original.saveFile(path.toString());
+            TextDocument loaded = new TextDocument();
+            loaded.loadFile(path.toString());
+            assertEquals(2, loaded.getCharacters().size());
+            CharacterStyle style1 = loaded.getCharacters().get(0).getProperties();
+            CharacterStyle style2 = loaded.getCharacters().get(1).getProperties();
+            assertSame(style1, style2);
+        } finally {
+            Files.deleteIfExists(path);
+        }
+    }
+
 
 }
