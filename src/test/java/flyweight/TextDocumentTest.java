@@ -39,4 +39,33 @@ public class TextDocumentTest {
 
         assertNotSame(document.getCharacters().get(0).getProperties(), document.getCharacters().get(1).getProperties());
     }
+
+    @Test
+    void testDisplay(){
+        TextDocument document = new TextDocument();
+        document.addCharacter('H', "Arial", 12, "Red");
+        document.addCharacter('e', "Arial", 12, "Red");
+
+        java.io.ByteArrayOutputStream output =
+                new java.io.ByteArrayOutputStream();
+
+        java.io.PrintStream original = System.out;
+
+        try {
+            System.setOut(new java.io.PrintStream(output));
+
+            document.display();
+
+        } finally {
+            System.setOut(original);
+        }
+
+        String result = output.toString();
+
+        assertTrue(result.contains(
+                "Character: H | Font: Arial | Size: 12 | Color: Red"));
+
+        assertTrue(result.contains(
+                "Character: e | Font: Calibri | Size: 14 | Color: Blue"));
+    }
 }
