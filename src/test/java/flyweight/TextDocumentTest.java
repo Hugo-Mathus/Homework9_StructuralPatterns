@@ -3,6 +3,10 @@ package Flyweight;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 
 public class TextDocumentTest {
@@ -77,12 +81,30 @@ public class TextDocumentTest {
         }
 
         document.saveFile("testDocument.txt");
-
         // Check that the file was created
         assertTrue(file.exists());
-
         // Clean up after testing
         assertTrue(file.delete());
+    }
+
+    @Test
+    void testSaveFileContents() throws IOException {
+        TextDocument document = new TextDocument();
+        document.addCharacter('H', "Arial", 12, "Red");
+        document.addCharacter('e', "Calibri", 14, "Blue");
+
+        Path path = Path.of("testDocumentContents.txt");
+
+        try{
+            document.saveFile(path.toString());
+
+            String content = Files.readString(path);
+            assertTrue(content.contains("72,Arial,12,Red"));
+            assertTrue(content.contains("101,Calibri,14,Blue"));
+        }
+        finally {
+            Files.deleteIfExists(path);
+        }
     }
 
 }
