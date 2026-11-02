@@ -13,4 +13,12 @@ public class TestRealSongService {
         assertNotNull(result);
         assertEquals("Kiss of Life", result.getTitle());
     }
+
+    @Test
+    public void testSearchByTitle() {
+        RealSongService realSongService = new RealSongService();
+        List<Song> result = realSongService.searchByTitle("Kiss of Life");
+        assertNotNull(result);
+        assertEquals("Kiss of Life", result.get(0).getTitle());
+    }
 }
