@@ -2,6 +2,8 @@ package Flyweight;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.File;
+
 
 public class TextDocumentTest {
 
@@ -59,4 +61,28 @@ public class TextDocumentTest {
         assertTrue(result.contains("Character: H | Font: Arial | Size: 12 | Color: Red"));
         assertTrue(result.contains("Character: e | Font: Arial | Size: 12 | Color: Red"));
     }
+
+    @Test
+    void testSaveFile() {
+        TextDocument document = new TextDocument();
+
+        document.addCharacter('H', "Arial", 12, "Red");
+        document.addCharacter('e', "Calibri", 14, "Blue");
+
+        File file = new File("testDocument.txt");
+
+        // Make sure the file does not already exist
+        if (file.exists()) {
+            assertTrue(file.delete());
+        }
+
+        document.saveFile("testDocument.txt");
+
+        // Check that the file was created
+        assertTrue(file.exists());
+
+        // Clean up after testing
+        assertTrue(file.delete());
+    }
+
 }
