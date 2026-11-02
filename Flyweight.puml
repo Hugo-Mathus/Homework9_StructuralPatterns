@@ -8,7 +8,7 @@
         -List<TextCharacter> characters
         -CharacterFactory factory
         +addCharacter(char character, String font, int size, String color): void
-        +editCharacter(char Character, String font, int size, String Color): void
+        +editCharacter(int index, char Character, String font, int size, String Color): void
         +display(): void
         +saveToFile(String filename): void
         +loadFromFile(String filename): void
@@ -24,7 +24,7 @@
     }
 
     class CharacterFactory{
-        -Map<String,CharacterStyle> characters
+        -Map<String,CharacterStyle> styles
         +getCharacterProperties(String font, int size, String color): CharacterStyle
     }
 
