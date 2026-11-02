@@ -1,15 +1,49 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+Class SongService<interface>{
+    +searchByID(Integer songID): Song
+    +searchByTitle(String title): List<Song>
+    +searchByAlbum(String album): List<Song>
+}
 
-== Initialization ==
+Class SongServiceProxy{
+    -SongService realService
+    -Map<Integer,Song> idCache
+    -Map > titlecache
+    -Map > albumCache
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+    +searchByID(Integer songID): Song
+    +searchByTitle(String title): List<Song>
+    +searchByAlbum(String album): List<Song>
+}
 
-== Repetition ==
+Class RealSongService{
+    -Map<Integer,Song> songs
+    +searchById(Integer songID): Song
+    +searchByTitle(String title): List<Song>
+    +seatchByAlbum(String album): List<Song>
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+Class Song{
+    -String title
+    -String artist
+    -String album
+    -int duration
+
+    +getTitle(): String
+    +getArtist(): String
+    +getAlbum(): String
+    +getDuration(): int
+}
+
+Class ProxyDriver{
+    +main(String[] args): void
+}
+
+SongServiceProxy *--/references SongService
+SongServiceProxy ..> SongService
+ProxyDriver -->/user SongService
+SongService <|.. RealSongService
+RealSongService --/retrieves> Song
+
 @enduml

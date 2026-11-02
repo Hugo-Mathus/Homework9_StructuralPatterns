@@ -15,19 +15,19 @@ public class Song {
     }
 
     public String getTitle() {
-        return null;
+        return title;
     }
 
     public String getArtist() {
-        return null;
+        return artist;
     }
 
     public String getAlbum() {
-        return null;
+        return album;
     }
 
     public int getDuration() {
-        return 0;
+        return duration;
     }
 
 
