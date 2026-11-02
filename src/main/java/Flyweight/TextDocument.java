@@ -19,6 +19,9 @@ public class TextDocument {
     }
 
     public void editCharacter(int index, char character, String font, int size, String color) {
+        CharacterStyle style = factory.getCharacterProperties(font,size,color);
+        TextCharacter newCharacter = new TextCharacter(character, style);
+        characters.set(index, newCharacter);
     }
 
     public void display(){
