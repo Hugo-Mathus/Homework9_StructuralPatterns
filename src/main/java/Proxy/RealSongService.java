@@ -44,7 +44,17 @@ public class RealSongService implements SongService {
 
     @Override
     public List<Song> searchByAlbum(String album) {
-        return null;
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        List<Song> results = new ArrayList<>();
+        for (Song song : songs.values()) {
+            if (song.getAlbum().equals(album)) {
+                results.add(song);
+            }
+        }
+        return results;
     }
-
 }

@@ -28,8 +28,6 @@ public class TestRealSongService {
         List<Song> results = realSongService.searchByAlbum("La Vida Era Mas Corta");
         assertNotNull(results);
         assertEquals(2, results.size());
-        assertEquals("Time", results.get(0).getTitle());
-
         assertTrue(results.stream().anyMatch(song -> song.getTitle().equals("Gil")));
         assertTrue(results.stream().anyMatch(song -> song.getTitle().equals("Recorde")));
     }
