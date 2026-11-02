@@ -1,0 +1,55 @@
+@startuml
+
+    class CharacterStyle <interface>{
+        +display(char character): void
+    }
+
+    class TextDocument{
+        -List<TextCharacter> characters
+        -CharacterFactory factory
+        +addCharacter(char character, String font, int size, String color): void
+        +editCharacter(char Character, String font, int size, String Color): void
+        +display(): void
+        +saveToFile(String filename): void
+        +loadFromFile(String filename): void
+    }
+
+    class TextCharacter{
+        - char character
+        -CharacterStyle properties
+        +TextCharacter(char character, CharacterStyle properties)
+        +display(): void
+        +getCharacter(): char
+        +getProperties(): CharacterStyle
+    }
+
+    class CharacterFactory{
+        -Map<String,CharacterStyle> characters
+        +getCharacterProperties(String font, int size, String color): CharacterStyle
+    }
+
+    class CharacterProperties{
+        -String font
+        -int size
+        -String color
+        +CharacterProperties(String font, int size, String color)
+        +display(char character): void
+        +getFont(): String
+        +getSize(): int
+        +getColor(): String
+    }
+
+    class Driver{
+        +main(String[] args): void
+    }
+
+
+Driver ..>/creates TextDocument
+TextDocument *--/contains TextCharacter
+TextDocument -->/uses CharacterFactory
+CharacterFactory o--/stores CharacterStyle
+TextCharacter -->/references CharacterStyle
+CharacterStyle <|../Implements CharacterProperties
+
+
+@enduml
