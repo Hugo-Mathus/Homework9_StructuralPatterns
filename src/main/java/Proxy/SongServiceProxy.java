@@ -16,7 +16,12 @@ public class SongServiceProxy implements SongService{
 
     @Override
     public Song searchById(Integer SongID) {
-        return null;
+        if (idCache.containsKey(SongID)) {
+            return idCache.get(SongID);
+        }
+        Song song = realService.searchById(SongID);
+        idCache.put(SongID,song);
+        return song;
     }
 
     @Override

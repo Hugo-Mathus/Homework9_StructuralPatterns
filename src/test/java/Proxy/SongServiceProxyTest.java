@@ -14,4 +14,15 @@ public class SongServiceProxyTest {
         assertEquals("Gil", result.getTitle());
         assertEquals("Milo J", result.getArtist());
     }
+
+    @Test
+    public void testSearchByTitle() {
+        RealSongService realService = new RealSongService();
+        SongService proxy = new SongServiceProxy(realService);
+
+        Song result = proxy.searchById(5);
+        assertNotNull(result);
+        assertEquals("Gil", result.getTitle());
+        assertEquals("Milo J", result.getArtist());
+    }
 }
