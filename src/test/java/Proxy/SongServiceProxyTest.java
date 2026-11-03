@@ -25,4 +25,23 @@ public class SongServiceProxyTest {
         assertEquals("Gil", result.getTitle());
         assertEquals("Milo J", result.getArtist());
     }
+
+    @Test
+    void testSearchByIdCaching() {
+        SongService realService = new RealSongService();
+        SongService proxy = new SongServiceProxy(realService);
+
+        long start = System.nanoTime();
+        Song first = proxy.searchById(5);
+        long firstDuration = System.nanoTime() - start;
+
+        start = System.nanoTime();
+        Song second = proxy.searchById(5);
+        long secondDuration = System.nanoTime() - start;
+
+        assertNotNull(first);
+        assertSame(first, second);
+        assertTrue(secondDuration < firstDuration);
+    }
+
 }
