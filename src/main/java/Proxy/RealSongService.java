@@ -35,7 +35,7 @@ public class RealSongService implements SongService {
         }
         List<Song> results = new ArrayList<>();
         for (Song song : songs.values()) {
-            if (songs.containsKey(title)) {
+            if (song.getTitle().equals(title)) {
                 results.add(song);
             }
         }

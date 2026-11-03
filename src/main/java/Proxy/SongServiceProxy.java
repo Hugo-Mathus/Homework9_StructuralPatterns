@@ -4,11 +4,13 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 
+
+
 public class SongServiceProxy implements SongService{
     private final SongService realService;
     private final Map<Integer,Song> idCache = new HashMap<>();
-    private final Map<Integer,List<Song>> titleCache = new HashMap<>();
-    private final Map<Integer,List<Song>> albumCache = new HashMap<>();
+    private final Map<String,List<Song>> titleCache = new HashMap<>();
+    private final Map<String,List<Song>> albumCache = new HashMap<>();
 
     public SongServiceProxy(SongService realService) {
         this.realService = realService;
@@ -26,11 +28,21 @@ public class SongServiceProxy implements SongService{
 
     @Override
     public List<Song> searchByTitle(String title) {
-        return null;
+        if (titleCache.containsKey(title)) {
+            return titleCache.get(title);
+        }
+        List<Song> results = realService.searchByTitle(title);
+        titleCache.put(title,results);
+        return results;
     }
 
     @Override
     public List<Song> searchByAlbum(String album) {
-        return null;
+        if (albumCache.containsKey(album)) {
+            return albumCache.get(album);
+        }
+        List<Song> results = realService.searchByAlbum(album);
+        albumCache.put(album,results);
+        return results;
     }
 }

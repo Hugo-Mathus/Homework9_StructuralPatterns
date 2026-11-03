@@ -24,8 +24,21 @@ public class SongServiceProxyTest {
         List<Song> results = proxy.searchByTitle("Time");
         assertNotNull(results);
         assertEquals(1, results.size());
-        assertEquals("Pink Floyd", results.get(0).getTitle());
+        assertEquals("Time", results.get(0).getTitle());
+        assertEquals("Pink Floyd", results.get(0).getArtist());
 
+    }
+
+    @Test
+    void testSearchByTitleCaching() {
+        SongService proxy = new SongServiceProxy(new RealSongService());
+
+        List<Song> first = proxy.searchByTitle("Time");
+        List<Song> second = proxy.searchByTitle("Time");
+
+        assertNotNull(first);
+        assertEquals(1, first.size());
+        assertSame(first, second);
     }
 
     @Test
@@ -44,6 +57,23 @@ public class SongServiceProxyTest {
         assertNotNull(first);
         assertSame(first, second);
         assertTrue(secondDuration < firstDuration);
+    }
+
+    @Test
+    void testSearchByAlbum() {
+        SongService proxy = new SongServiceProxy(new RealSongService());
+
+        List<Song> results =
+                proxy.searchByAlbum("La Vida Era Mas Corta");
+
+        assertNotNull(results);
+        assertEquals(2, results.size());
+
+        assertTrue(results.stream()
+                .anyMatch(song -> song.getTitle().equals("Gil")));
+
+        assertTrue(results.stream()
+                .anyMatch(song -> song.getTitle().equals("Recorde")));
     }
 
 }
